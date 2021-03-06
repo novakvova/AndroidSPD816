@@ -3,6 +3,8 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.myapplication.network.ImageRequester;
@@ -22,5 +24,9 @@ public class LoginActivity extends AppCompatActivity {
         myImage = findViewById(R.id.myimg);
         imageRequester.setImageFromUrl(myImage, url);
 
+    }
+
+    public void OnClickBtn(View view) {
+        Log.d("Click my", "------Bomba-------");
     }
 }
