@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.myapplication.constants.Urls;
+import com.example.myapplication.dto.LoginDto;
 import com.example.myapplication.network.ImageRequester;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -32,11 +33,25 @@ public class LoginActivity extends AppCompatActivity {
     public void OnClickBtn(View view) {
         final TextInputEditText email = findViewById(R.id.textInputEmail);
         final TextInputLayout emailLayout = findViewById(R.id.textFieldEmail);
-        if(email.getText().toString().isEmpty()) {
+        final TextInputEditText password = findViewById(R.id.textInputPassword);
+        final TextInputLayout passwordLayout = findViewById(R.id.textFieldPassword);
+
+        LoginDto dto = new LoginDto(email.getText().toString(),
+                password.getText().toString());
+
+        if(dto.getEmail().isEmpty()) {
             emailLayout.setError("Введіть пошту!");
+            return;
         }
         else
             emailLayout.setError("");
+
+        if(dto.getPassword().isEmpty()) {
+            passwordLayout.setError("Введіть пароль!");
+            return;
+        }
+        else
+            passwordLayout.setError("");
 
         Log.d("Click my", email.getText().toString());
     }
