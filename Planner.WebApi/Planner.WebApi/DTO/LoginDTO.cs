@@ -11,7 +11,7 @@ namespace Planner.WebApi.DTO
         [Required(ErrorMessage = "Обовязкове поле"), EmailAddress(ErrorMessage ="Не валідна пошта")]
         public string Email { get; set; }
 
-        [RegularExpression(pattern: "", ErrorMessage = "")]
+        //[RegularExpression(pattern: "", ErrorMessage = "")]
         [Required(ErrorMessage = "Обовязкове поле")]
         public string Password { get; set; }
     }

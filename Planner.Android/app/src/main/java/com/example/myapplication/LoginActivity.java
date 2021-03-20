@@ -8,12 +8,15 @@ import android.view.View;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.myapplication.constants.Urls;
+import com.example.myapplication.dto.LoginBadRequest;
 import com.example.myapplication.dto.LoginDto;
 import com.example.myapplication.dto.LoginResultDto;
 import com.example.myapplication.network.ImageRequester;
 import com.example.myapplication.network.services.AccountService;
+import com.example.myapplication.utils.CommonUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,31 +48,47 @@ public class LoginActivity extends AppCompatActivity {
         LoginDto dto = new LoginDto(email.getText().toString(),
                 password.getText().toString());
 
-        if(dto.getEmail().isEmpty()) {
-            emailLayout.setError("Введіть пошту!");
-            return;
-        }
-        else
-            emailLayout.setError("");
-
-        if(dto.getPassword().isEmpty()) {
-            passwordLayout.setError("Введіть пароль!");
-            return;
-        }
-        else
-            passwordLayout.setError("");
-
+//        if(dto.getEmail().isEmpty()) {
+//            emailLayout.setError("Введіть пошту!");
+//            return;
+//        }
+//        else
+//            emailLayout.setError("");
+//
+//        if(dto.getPassword().isEmpty()) {
+//            passwordLayout.setError("Введіть пароль!");
+//            return;
+//        }
+//        else
+//            passwordLayout.setError("");
+        CommonUtils.showLoading(this);
         AccountService.getInstance()
                 .getJSONApi()
                 .login(dto)
                 .enqueue(new Callback<LoginResultDto>() {
                     @Override
                     public void onResponse(Call<LoginResultDto> call, Response<LoginResultDto> response) {
-                        Log.d("server", "Good");
+                        CommonUtils.hideLoading();
+                        if(response.isSuccessful()) {
+                            Log.d("server", response.body().getToken());
+                        }
+                        else {
+                            try {
+                                String json = response.errorBody().string();
+                                Gson gson = new Gson();
+                                LoginBadRequest result = gson.fromJson(json, LoginBadRequest.class);
+                                int t=3;
+                                emailLayout.setError(result.getEmail());
+                                passwordLayout.setError(result.getPassword());
+                            } catch(Exception ex) {
+                                email.setText(ex.getMessage());
+                            }
+                        }
                     }
 
                     @Override
                     public void onFailure(Call<LoginResultDto> call, Throwable t) {
+                        CommonUtils.hideLoading();
                         Log.e("server", "Bad");
                     }
                 });

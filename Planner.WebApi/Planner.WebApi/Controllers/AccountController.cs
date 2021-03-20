@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Planner.WebApi.DTO;
+using Planner.WebApi.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,7 @@ namespace Planner.WebApi.Controllers
         {
             if(!ModelState.IsValid)
             {
-                return BadRequest(
-                    new
-                    {
-                        email = "Не коректний емейл",
-                        password = "Пустий пароль"
-                    });
+                return BadRequest(CustomValidator.GetErrorsByModel(ModelState));
             }
             return Ok(new 
             {
