@@ -9,6 +9,8 @@ import android.view.View;
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.myapplication.constants.Urls;
 import com.example.myapplication.network.ImageRequester;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends AppCompatActivity {
     private ImageRequester imageRequester;
@@ -28,6 +30,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void OnClickBtn(View view) {
-        Log.d("Click my", "------Bomba-------");
+        final TextInputEditText email = findViewById(R.id.textInputEmail);
+        final TextInputLayout emailLayout = findViewById(R.id.textFieldEmail);
+        if(email.getText().toString().isEmpty()) {
+            emailLayout.setError("Введіть пошту!");
+        }
+        else
+            emailLayout.setError("");
+
+        Log.d("Click my", email.getText().toString());
     }
 }
