@@ -16,6 +16,15 @@ namespace Planner.WebApi.Controllers
         [Route("login")]
         public async Task<IActionResult> Login([FromBody]LoginDTO model)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(
+                    new
+                    {
+                        email = "Не коректний емейл",
+                        password = "Пустий пароль"
+                    });
+            }
             return Ok(new 
             {
                 token = "asdfalflaskdfalsdfj"

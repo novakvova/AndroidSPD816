@@ -9,9 +9,15 @@ import android.view.View;
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.myapplication.constants.Urls;
 import com.example.myapplication.dto.LoginDto;
+import com.example.myapplication.dto.LoginResultDto;
 import com.example.myapplication.network.ImageRequester;
+import com.example.myapplication.network.services.AccountService;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private ImageRequester imageRequester;
@@ -21,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        String url = Urls.BASE+"/images/3.jpg";
+        String url = Urls.BASE+"/images/1.jpg";
                 //"https://i.pinimg.com/564x/6f/de/85/6fde85b86c86526af5e99ce85f57432e.jpg";
 
         imageRequester = ImageRequester.getInstance();
@@ -52,6 +58,21 @@ public class LoginActivity extends AppCompatActivity {
         }
         else
             passwordLayout.setError("");
+
+        AccountService.getInstance()
+                .getJSONApi()
+                .login(dto)
+                .enqueue(new Callback<LoginResultDto>() {
+                    @Override
+                    public void onResponse(Call<LoginResultDto> call, Response<LoginResultDto> response) {
+                        Log.d("server", "Good");
+                    }
+
+                    @Override
+                    public void onFailure(Call<LoginResultDto> call, Throwable t) {
+                        Log.e("server", "Bad");
+                    }
+                });
 
         Log.d("Click my", email.getText().toString());
     }
