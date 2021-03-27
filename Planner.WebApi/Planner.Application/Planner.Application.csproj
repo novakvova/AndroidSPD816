@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Planner.Domain\Planner.Domain.csproj" />
+    <ProjectReference Include="..\Planner.EFData\Planner.EFData.csproj" />
+  </ItemGroup>
+
 </Project>
