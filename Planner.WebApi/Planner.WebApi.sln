@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Planner.WebApi", "Planner.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Planner.Domain", "Planner.Domain\Planner.Domain.csproj", "{DE4BFF39-5C42-42F2-827B-1892A08A0B24}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Planner.EFData", "Planner.EFData\Planner.EFData.csproj", "{01495278-44ED-4B97-8241-598A3DE613C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Planner.Application", "Planner.Application\Planner.Application.csproj", "{3B86411E-5F01-4009-92BB-53AE9CA66902}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{DE4BFF39-5C42-42F2-827B-1892A08A0B24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE4BFF39-5C42-42F2-827B-1892A08A0B24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE4BFF39-5C42-42F2-827B-1892A08A0B24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01495278-44ED-4B97-8241-598A3DE613C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01495278-44ED-4B97-8241-598A3DE613C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01495278-44ED-4B97-8241-598A3DE613C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01495278-44ED-4B97-8241-598A3DE613C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B86411E-5F01-4009-92BB-53AE9CA66902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B86411E-5F01-4009-92BB-53AE9CA66902}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B86411E-5F01-4009-92BB-53AE9CA66902}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B86411E-5F01-4009-92BB-53AE9CA66902}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

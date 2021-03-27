@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Planner.Domain
 {
-    public class AppUserRole: IdentityUserRole<long>
+    public class AppUserRole : IdentityUserRole<long>
     {
         public virtual AppUser User { get; set; }
         public virtual AppRole Role { get; set; }
