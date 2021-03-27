@@ -29,7 +29,7 @@ namespace Planner.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(opt => opt
-                .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                .UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
         }
 
