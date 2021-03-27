@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Planner.Application.Account;
+using Planner.Application.Account.Registration;
 using Planner.WebApi.DTO;
 using Planner.WebApi.Helpers;
 using System;
@@ -9,9 +12,8 @@ using System.Threading.Tasks;
 
 namespace Planner.WebApi.Controllers
 {
-    [Route("api/[controller]")]
-    [Produces("application/json")]
-    public class AccountController : ControllerBase
+    [AllowAnonymous]
+    public class AccountController : BaseController
     {
         [HttpPost]
         [Route("login")]
@@ -25,6 +27,11 @@ namespace Planner.WebApi.Controllers
             {
                 token = "asdfalflaskdfalsdfj"
             });
+        }
+        [HttpPost("registration")]
+        public async Task<ActionResult<UserViewModel>> RegistrationAsync(RegistrationCommand command)
+        {
+            return await Mediator.Send(command);
         }
     }
 }
