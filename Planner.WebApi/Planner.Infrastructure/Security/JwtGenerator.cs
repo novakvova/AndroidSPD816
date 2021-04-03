@@ -1,10 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Planner.Application.Interfaces;
 using Planner.Domain;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
@@ -13,29 +15,64 @@ namespace Planner.Infrastructure.Security
     public class JwtGenerator : IJwtGenerator
     {
         private readonly SymmetricSecurityKey _key;
+        private readonly UserManager<AppUser> _userManager;
 
-        public JwtGenerator(IConfiguration config)
+        public JwtGenerator(UserManager<AppUser> userManager, IConfiguration config)
         {
+            _userManager = userManager;
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
         }
 
         public string CreateToken(AppUser user)
         {
-            var claims = new List<Claim> { new Claim(JwtRegisteredClaimNames.NameId, user.UserName) };
+            var roles = _userManager.GetRolesAsync(user).Result;
+            roles = roles.OrderBy(x => x).ToList();
+            //var image = user.Image;
 
-            var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
+            //if (image == null)
+            //{
+            //    image = _configuration.GetValue<string>("DefaultImage");
+            //}
 
-            var tokenDescriptor = new SecurityTokenDescriptor
+
+            List<Claim> claims = new List<Claim>()
             {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(7),
-                SigningCredentials = credentials
+                new Claim("id",user.Id.ToString()),
+                new Claim("username",user.UserName),
+                //new Claim("image",image)
             };
-            var tokenHandler = new JwtSecurityTokenHandler();
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim("roles", role));
+            }
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
+            //var now = DateTime.UtcNow;
+            //var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetValue<String>("JwtKey")));
+            var signinCredentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
 
-            return tokenHandler.WriteToken(token);
+            var jwt = new JwtSecurityToken(
+                signingCredentials: signinCredentials,
+                expires: DateTime.Now.AddDays(1000),
+                claims: claims
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(jwt);
+
+            //var claims = new List<Claim> { new Claim(JwtRegisteredClaimNames.NameId, user.UserName) };
+
+            //var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
+
+            //var tokenDescriptor = new SecurityTokenDescriptor
+            //{
+            //    Subject = new ClaimsIdentity(claims),
+            //    Expires = DateTime.Now.AddDays(7),
+            //    SigningCredentials = credentials
+            //};
+            //var tokenHandler = new JwtSecurityTokenHandler();
+
+            //var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            //return tokenHandler.WriteToken(token);
         }
     }
 }
