@@ -47,6 +47,7 @@ namespace Planner.Infrastructure.Extensions
                 {
                     DisplayName = "Admin",
                     UserName = "admin@gmail.com",
+                    Image="admin.jpg",
                     Email = "admin@gmail.com",
                     PhoneNumber = "+380950000000"
                 };
@@ -63,6 +64,7 @@ namespace Planner.Infrastructure.Extensions
                 {
                     DisplayName = "User",
                     UserName = "user@gmail.com",
+                    Image="user.jpg",
                     Email = "user@gmail.com",
                     PhoneNumber = "+38095000000"
                 };

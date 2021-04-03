@@ -143,7 +143,7 @@ namespace Planner.WebApi
             });
 
             //app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.ApplySeeder();
