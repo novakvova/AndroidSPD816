@@ -20,7 +20,7 @@
     "Planner.WebApi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "swagger",
       "applicationUrl": "http://127.0.0.1:5284",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
